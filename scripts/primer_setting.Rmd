@@ -1,0 +1,367 @@
+---
+title: "primer_selection"
+author: "Hongxi"
+date: "2023-11-28"
+output:
+  html_document: default
+---
+# 引物设计流程 
+
+## 定义所需函数
+在流程开始前定义流程所需的函数，其包括：  
+1. `reverseDNA`：反向互补序列函数。输入**DNA序列**的反向DNA序列  
+2. `align_all`: 序列比对函数。输入A、B两条序列，将返回A序列在B序列（以及B序列的反向互补序列）中出现的总次数。  
+3. `GC_contain`: 计算GC含量的函数。返回输入序列的GC百分比含量。  
+4. `get_all_primers`:批量获取引物序列。从输入的序列中获取所有在某个长度范围内的子序列（以及其所在位置）并放入一个数据框后返回。需要输入的参数有最小值（`minsize`）、最大值（`maxsize`）、DNA长度（`DNAsize`）、DNA序列（`DNAseq`）。 
+
+```{r function preparation}
+#清理参数
+rm(list = ls())
+
+#配置函数
+##获取反向DNA序列(5'-3')
+reverseDNA <- function(DNA) {
+  q1 <- c("A","G","C","T")
+  q2 <- c("T","C","G","A")
+  
+  names(q2)=q1
+  
+  F_seq <- DNA
+  R_seq <- paste(rev(q2[unlist(strsplit(F_seq,""))]),collapse = "")
+  
+  return(R_seq)
+}
+
+##序列比对函数:返回相同序列的个数（包括反向序列上的）
+align_all <- function(query,subject) {
+  
+  c_query <- reverseDNA(DNA=query)
+  
+  F_matches <- str_count(subject,query)
+  R_matches <- str_count(subject,c_query)
+  
+  all_matches <- F_matches + R_matches
+  return(all_matches)
+}
+
+##GC含量函数
+GC_contain <- function(DNA) {
+  GC <- (str_count(DNA, "G")+str_count(DNA, "C"))/nchar(DNA)*100
+  GC <- round(GC,2)
+  return(GC)
+}
+
+##获取字符串中特定长度的子集并标注位置
+get_all_primers <- function(minsize, maxsize, DNAsize, DNAseq) {
+
+  get_primer_positions <- function(minsize, maxsize, DNAsize) {
+    
+    primer_size_range <- minsize:maxsize
+    
+    get_position <- function(DNAsize,primer_size) {
+    startpoint <- 1:(DNAsize - primer_size + 1)
+    endpoint <- primer_size:DNAsize
+    
+    temdata <- data.frame(start = startpoint, end = endpoint)
+    
+    return(temdata)
+    }
+    
+    position_list <- mapply(get_position, 
+                            DNAsize = DNAsize, 
+                            primer_size = primer_size_range)
+    
+    position_map <- lapply(data.frame(position_list), as.list)
+    
+    primer_all_position <- do.call(bind_rows, position_map)
+    primer_all_position$accession <- 1:length(primer_all_position$start)
+    
+    return(primer_all_position)
+  }
+
+  primer_positions <- get_primer_positions(minsize = minsize,
+                                           maxsize = maxsize,
+                                           DNAsize = DNAsize)
+  
+  primer_positions$seq <- str_sub(DNAseq, start = primer_positions$start, end = primer_positions$end)
+
+  return(primer_positions)
+}
+
+
+```
+
+## 加载所需要的包  
+该流程需要使用以下常用处理字符串的包：  
+1. `stringr`  
+2. `dplyr`  
+3. `tidyr`  
+  
+运行以下代码加载包 
+```{r setting and loading, message=FALSE}
+#加载包
+library(stringr)
+library(dplyr)
+library(tidyr)
+```
+
+## 开始分析
+```{r dataloading}
+#加载数据并初步处理
+setwd("C:/Users/Hongxi/Documents/R_project")
+F_DNA <- paste(readLines("18S_rRNA_N1.txt"), collapse = "")
+R_DNA <- reverseDNA(DNA = F_DNA)
+```
+
+```{r basic analysis}
+#目标序列基础分析
+target_size <- nchar(F_DNA)
+
+target_GC <- GC_contain(F_DNA)
+```
+
+
+## 单条引物的预筛选
+根据引物大小，使用本流程预先设定的函数`get_all_primers`选出所有长度范围内的子序列以减少运算量。 
+```{r primer prepration}
+#输入引物大小限制
+
+primer_size_min <- 19
+primer_size_max <- 21
+
+#获取潜在引物序列
+F_primer_all <- get_all_primers(minsize = primer_size_min,
+                                maxsize = primer_size_max,
+                                DNAsize = target_size,
+                                DNAseq = F_DNA)
+R_primer_all <- get_all_primers(minsize = primer_size_min,
+                                maxsize = primer_size_max,
+                                DNAsize = target_size,
+                                DNAseq = R_DNA)
+```
+
+## 单条引物的筛选  
+这里使用的限制条件有：  
+  1. 引物大小  
+  2. CG含量  
+  3. 引物Tm:  
+  引物的Tm值的计算方式为非常粗略的`Tm = 4(G+C)+2(A+T)`,后续优化可选择其他的公式，可能选用Merck提供的最邻近法公式：
+    !["Tm最邻近法公式"](~/R_project/Tm_calculation.png){width=50%}   
+  4. 引物自身3端配对  
+  5. 引物与靶标的3端配对  
+  
+其中,引物自身配对的限制是为了尽量避免发卡结构和引物二聚体的产生，与靶标的3端限制是为了避免与靶标的非特异性扩增。但是这种方法无法准确排除发卡结构和引物二聚体，因此外部软件的介入可能是必要的。  
+  
+调整相关参数（GC含量、Tm范围、引物自身3端配对上限（含）、引物与靶标配对上限（含））后运行以下代码，可得两个分别包含正反向可用单条引物的数据框 
+```{r primer selection}
+#单引物筛选
+##设定GC含量阈值
+GC_min <- 50
+GC_max <- 60
+
+##计算CG含量(此处应该可以优化)
+F_primer_all$GC <- unlist(lapply(as.list(F_primer_all$seq), GC_contain))
+R_primer_all$GC <- unlist(lapply(as.list(R_primer_all$seq), GC_contain))
+
+##根据GC阈值筛选
+F_primer <- subset(F_primer_all, subset = GC >= GC_min & GC<=GC_max)
+R_primer <- subset(R_primer_all, subset = GC >= GC_min & GC<=GC_max)
+
+
+##设定Tm阈值 (后期tm阈值应与GC含量协同)
+Tm_min <- 59
+Tm_max <- 65
+
+##计算Tm值：暂时使用Tm = 4(G+C)+2(A+T)计算（可优化)
+F_primer$Tem <- 2*(F_primer$GC/100 + 1)*(F_primer$end - F_primer$start)
+
+R_primer$Tem <- 2*(R_primer$GC/100 + 1)*(R_primer$end - R_primer$start)
+
+##根据Tm值筛选
+
+F_primer <- subset(F_primer, subset = Tem >= Tm_min & Tem <= Tm_max)
+R_primer <- subset(R_primer, subset = Tem >= Tm_min & Tem <= Tm_max)
+
+
+##输入引物3端配对数上限
+self_match_max <- 5
+##引物3端自身配对筛选
+F_primer$reversed_tail <- str_sub(sapply(as.list(F_primer$seq),reverseDNA), end = self_match_max)
+F_primer$self_tail_match <- str_count(F_primer$seq,F_primer$reversed_tail)
+
+
+R_primer$reversed_tail <- str_sub(sapply(as.list(R_primer$seq),reverseDNA), end = self_match_max)
+R_primer$self_tail_match <- str_count(R_primer$seq,R_primer$reversed_tail)
+
+F_primer <- subset(F_primer,
+                   subset = self_tail_match == 0,
+                   select = c("accession","seq","start","end","GC","Tem"))
+R_primer <- subset(R_primer,
+                   subset = self_tail_match == 0,
+                   select = c("accession","seq","start","end","GC","Tem"))
+
+
+##输入引物3端与靶标配对数上限
+target_match_max <-7
+##引物3端与靶标筛选
+F_primer$tail <- str_sub(F_primer$seq, - target_match_max)
+F_primer$tail_match <- mapply(align_all, as.list(F_primer$tail), as.list(F_primer$seq))
+
+R_primer$tail <- str_sub(R_primer$seq, - target_match_max)
+R_primer$tail_match <- mapply(align_all, as.list(R_primer$tail), as.list(R_primer$seq))
+
+F_primer <- subset(F_primer,
+                   subset = tail_match == 1,
+                   select = c("accession","seq","start","end","GC","Tem"))
+colnames(F_primer) <- c("F_accession", "F_seq", "F_start", "F_end","F_GC","F_Tem")
+
+R_primer <- subset(R_primer,
+                   subset = tail_match == 1,
+                   select = c("accession","seq","start","end","GC","Tem"))
+colnames(R_primer) <- c("R_accession", "R_seq", "R_start", "R_end","R_GC","R_Tem")
+
+#查看前20行引物所在的数据框
+print(F_primer[1:20,])
+print(R_primer[1:20,])
+```
+
+## 额外限制条件  
+  
+大部分资料显示，引物末端避免使用A或T可以有效避免扩增失败的情况，在此可以使用以下代码选择只以GC结尾的引物。  
+  
+此外，有资料表明引物3端避开密码子的第三位也能提升扩增效率。值得注意的是，也有相关论点认为过多的GC在3端聚集可能会导致非特异性扩增。后续在单个引物的筛选阶段加入该限制可能也是有必要的。  
+  
+该代码块默认不运行，需要时可选择单独运行。 
+```{r optional selection}
+##为减轻后续计算压力，此处直接去掉所有以G或C结尾的引物片段，该chunk默认关闭
+R_primer <- subset(R_primer,subset = str_ends(R_seq,"G") | str_ends(R_seq,"C"))
+
+F_primer <- subset(F_primer,subset = str_ends(F_seq,"G") | str_ends(F_seq,"C"))
+```
+
+## 引物对的筛选 
+与单个引物筛选类似，此处使用的筛选条件有：  
+1. 扩增子长度  
+2. 引物对的Tm差异  
+3. 引物间的3端连续配对个数  
+4. 引物间任一连续碱基配对个数  
+  
+在大部分资料中，限制引物间的配对主要是由认为选择的标准，如5bp或7bp。其本质在于考虑引物序列的互补链的相似性，可能后期可以将BLAST比对使用到其中，或者设计一个打分规则判断引物对的可用性。可能需要检测引物对的外部软件如IDT以获得高质量的结果。  
+
+调整扩增子长度、引物Tm差值、引物间3端配对上限（含）、引物间任意互补上限（含）后运行以下代码，符合条件的引物对（包括其序列、5-3端位置、GC含量、Tm值）将被放于数据框中并输出。  
+  
+该步骤运算量较大，通常需要20s，但根据靶标序列的变大和限制条件的放松，运算时间可能会达数分钟。 
+
+```{r primer sets selection}
+#引物对筛选
+##输入引物对限制条件
+pcr_max <- 100
+pcr_min <- 50
+
+deltar_Tm <- 2
+
+##获取潜在引物对表,并根据限制筛选
+
+get_all_primer_sets <- function(F_primer,R_primer,target_size,pcr_min,pcr_max,deltar_Tm,end_match, total_match){
+  
+  F_primer_list <- split(F_primer,F_primer$F_accession)
+
+  get_primer_sets <- function(f_primer_data,r_primer_data, target_size, pcr_min, pcr_max, deltar_Tm) {
+      
+      primer_sets <- merge(f_primer_data,r_primer_data, all = T)
+      
+      primer_sets$pcr_length <- target_size-(primer_sets$R_start+primer_sets$F_start)
+      primer_sets$pcr_distance <- target_size -(primer_sets$R_end + primer_sets$F_end)
+      primer_sets$D_Tm <- primer_sets$R_Tem - primer_sets$F_Tem
+      
+      primer_sets <- subset(primer_sets, 
+                              subset = pcr_length >= pcr_min
+                            & pcr_length <= pcr_max 
+                            & pcr_distance >= 0 
+                            & D_Tm <= deltar_Tm 
+                            & D_Tm >= -deltar_Tm,
+                              select = c("R_seq", "R_start", "R_end","R_GC","R_Tem", "F_seq", "F_start", "F_end","F_GC","F_Tem","pcr_length"))
+      
+      return(primer_sets)
+  }
+  
+  primer_sets_list <-lapply(F_primer_list,get_primer_sets,
+                            f_primer_data = R_primer,
+                            target_size = target_size,
+                            pcr_min=pcr_min,
+                            pcr_max=pcr_max,
+                            deltar_Tm = deltar_Tm)
+  
+  primer_sets <- do.call(rbind,primer_sets_list)
+  
+  return(primer_sets)
+}
+
+primer_sets_all <- get_all_primer_sets(F_primer=F_primer,R_primer=R_primer,target_size=target_size,pcr_min=pcr_min,pcr_max=pcr_max,deltar_Tm = deltar_Tm)
+
+##根据引物间3端互补性筛选(可使用正则表达式优化)
+end_match_length <- 5
+
+primer_sets_all$R_tail <- str_sub(primer_sets_all$R_seq, -end_match_length)
+primer_sets_all$F_tail <- str_sub(primer_sets_all$F_seq, -end_match_length)
+
+primer_sets_all$total_tail_match <- mapply(align_all, as.list(primer_sets_all$F_tail), as.list(primer_sets_all$R_seq))+mapply(align_all, as.list(primer_sets_all$R_tail), as.list(primer_sets_all$F_seq))
+
+primer_sets_all <- subset(primer_sets_all,
+                          subset = total_tail_match == 0,
+                          select = c("R_seq", "R_start", "R_end","R_GC","R_Tem", "F_seq", "F_start", "F_end","F_GC","F_Tem","pcr_length"))
+
+##根据引物间任意互补性筛选
+total_match_length <- 7
+
+align_between_primers <- function(q1,q2,length){
+  
+  select_pattern <- paste0(".{",length,"}")
+  
+  any_match_q1 <- any(str_detect(q1,str_extract_all(q2, pattern = select_pattern)[[1]]))
+  any_match_q2 <- any(str_detect(q2,str_extract_all(q1, pattern = select_pattern)[[1]]))
+  return(any_match_q1 == T | any_match_q2== T)
+}
+
+primer_sets_all$any_pair_match <- mapply(align_between_primers,as.list(primer_sets_all$R_seq),as.list(primer_sets_all$F_seq),length = total_match_length)
+
+primer_sets <- subset(primer_sets_all, 
+                      subset = any_pair_match == F,
+                      select = c("R_seq", "R_start", "R_end","R_GC","R_Tem", "F_seq", "F_start", "F_end","F_GC","F_Tem","pcr_length"))
+
+print(primer_sets[sample(nrow(primer_sets), 15), ])
+```
+以上表格随机显示了结果中的30对可用引物。  
+  
+## 部分结果的可视化
+```{r painting, warning=FALSE}
+library(ggplot2)
+
+CG_overview <- 
+  ggplot(data = F_primer_all, aes(x=start, y=GC))+
+  geom_line(pch=2) +
+  ggtitle("所选引物长度的GC含量与所在位置")+
+  labs(x = "位置", y = "GC百分比")+
+  geom_hline(aes(yintercept = target_GC), colour = "red") +
+  annotate('text', x = 100, y = target_GC-5, label = paste0("GC=",target_GC,"%"), colour = "red") +
+  theme(panel.grid = element_blank())
+
+primer_sets_overview <- 
+  ggplot(data = primer_sets, aes(x=R_start, y =1)) +
+  geom_segment(aes(x=0, y=0, xend = target_size, yend = 0))+
+  geom_segment(aes(x=target_size-R_start, y = 0.5, xend = target_size-R_end, yend = 0.5),data = primer_sets, color = "red") +
+  geom_segment(aes(x=F_start, y = 1, xend = F_end, yend = 1),data = primer_sets, color = "blue")+
+  ggtitle("正反向可用引物在靶标上的位置")+
+  labs(x = "基因位置",y = "")+
+  coord_fixed(ratio = 500)+
+  theme(axis.ticks = element_blank(),axis.text.y = element_blank())+
+  annotate("text",x=0, y = 1, label = "Forward", color = "blue")+
+  annotate("text",x=0, y =0.5,label = "Reverse", color = "red")
+
+CG_overview
+primer_sets_overview
+```
+## 输出结果到结果目录
+```{r output}
+write.csv(primer_sets,file = "~/R_project/primer_sets.csv",row.names = F)
+```

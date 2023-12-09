@@ -1,0 +1,704 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\usepackage{soul}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={primer\_selection\_v.0.0.2},
+  pdfauthor={Hongxi},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{primer\_selection\_v.0.0.2}
+\author{Hongxi}
+\date{2023-11-28}
+
+\begin{document}
+\maketitle
+
+\hypertarget{ux5f15ux7269ux8bbeux8ba1ux6d41ux7a0b}{%
+\section{引物设计流程}\label{ux5f15ux7269ux8bbeux8ba1ux6d41ux7a0b}}
+
+v.0.0.2\\
+更新：\\
+1. 更新了Tm值的算法，现在使用的是改良后的最邻近法，其公式为：\\
+
+\(\Delta H = \frac{\Delta H}{\Delta S+A+Rln(\frac{C}{4})}-273.15+mlog[Na^+]\)\\
+其中，\(Delta H\)和\(Delta S\)通过查表并累加可得。A为起始螺旋起始所需的一个常数，R为气体常数，C为DNA单链的浓度，m则是钠离子浓度的对数的系数。该公式的各个参数可能需要后续实验进行校准。\\
+2. 由于目前的Tm值算法与GC含量高度相关，GC含量的筛选条件已被移除\\
+3.
+计算Tm值时会顺便返回引物与互补链结合的自由能，但该信息未在最终结果中被提取出来
+
+后续计划：\\
+1. 计算扩增子(50-150bp)的Tm值,有望用于SYBR相关的熔解曲线预测\\
+2. 增加对于重复序列的检测\\
+3. 增加基于序列相似性或自由能的打分系统，有望对于结果进行排序\\
+3.1. 基于计划3，完善序列比对功能\\
+4. 二级结构预测\\
+5. 优化比对函数，更快的运行速度 6. 输入序列的保守区域预测 7.
+引物的种间特异性检测
+
+\hypertarget{ux5b9aux4e49ux6240ux9700ux51fdux6570}{%
+\subsection{定义所需函数}\label{ux5b9aux4e49ux6240ux9700ux51fdux6570}}
+
+在流程开始前定义流程所需的函数，其包括：\\
+1.
+\texttt{reverseDNA}：反向互补序列函数。输入\textbf{DNA序列}的反向DNA序列\\
+2. \texttt{align\_all}:
+序列比对函数。输入A、B两条序列，将返回A序列在B序列（以及B序列的反向互补序列）中出现的总次数。\\
+3. \texttt{GC\_contain}:
+计算GC含量的函数。返回输入序列的GC百分比含量。\\
+4.
+\texttt{get\_all\_primers}:批量获取引物序列。从输入的序列中获取所有在某个长度范围内的子序列（以及其所在位置）并放入一个数据框后返回。需要输入的参数有最小值（\texttt{minsize}）、最大值（\texttt{maxsize}）、DNA长度（\texttt{DNAsize}）、DNA序列（\texttt{DNAseq}）。\\
+5.
+\texttt{get\_Tm\_G}:根据最邻近法计算目标序列的Tm值与自由能。默认单价阳离子浓度为0.05M，模板浓度为25uM，温度为37℃。修改默认温度可能导致结果不稳定。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#清理参数并记录时间}
+\FunctionTok{rm}\NormalTok{(}\AttributeTok{list =} \FunctionTok{ls}\NormalTok{())}
+\NormalTok{start\_time }\OtherTok{\textless{}{-}} \FunctionTok{Sys.time}\NormalTok{()}
+
+\CommentTok{\#配置函数}
+\DocumentationTok{\#\#获取反向DNA序列(5\textquotesingle{}{-}3\textquotesingle{})}
+\NormalTok{reverseDNA }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(DNA) \{}
+\NormalTok{  q1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{,}\StringTok{"G"}\NormalTok{,}\StringTok{"C"}\NormalTok{,}\StringTok{"T"}\NormalTok{)}
+\NormalTok{  q2 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"T"}\NormalTok{,}\StringTok{"C"}\NormalTok{,}\StringTok{"G"}\NormalTok{,}\StringTok{"A"}\NormalTok{)}
+  
+  \FunctionTok{names}\NormalTok{(q2)}\OtherTok{=}\NormalTok{q1}
+  
+\NormalTok{  F\_seq }\OtherTok{\textless{}{-}}\NormalTok{ DNA}
+\NormalTok{  R\_seq }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\FunctionTok{rev}\NormalTok{(q2[}\FunctionTok{unlist}\NormalTok{(}\FunctionTok{strsplit}\NormalTok{(F\_seq,}\StringTok{""}\NormalTok{))]),}\AttributeTok{collapse =} \StringTok{""}\NormalTok{)}
+  
+  \FunctionTok{return}\NormalTok{(R\_seq)}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#序列比对函数:返回相同序列的个数（包括反向序列上的）}
+\NormalTok{align\_all }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(query,subject) \{}
+  
+\NormalTok{  c\_query }\OtherTok{\textless{}{-}} \FunctionTok{reverseDNA}\NormalTok{(}\AttributeTok{DNA=}\NormalTok{query)}
+  
+\NormalTok{  F\_matches }\OtherTok{\textless{}{-}} \FunctionTok{str\_count}\NormalTok{(subject,query)}
+\NormalTok{  R\_matches }\OtherTok{\textless{}{-}} \FunctionTok{str\_count}\NormalTok{(subject,c\_query)}
+  
+\NormalTok{  all\_matches }\OtherTok{\textless{}{-}}\NormalTok{ F\_matches }\SpecialCharTok{+}\NormalTok{ R\_matches}
+  \FunctionTok{return}\NormalTok{(all\_matches)}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#GC含量函数}
+\NormalTok{GC\_contain }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(DNA) \{}
+\NormalTok{  GC }\OtherTok{\textless{}{-}}\NormalTok{ (}\FunctionTok{str\_count}\NormalTok{(DNA, }\StringTok{"G"}\NormalTok{)}\SpecialCharTok{+}\FunctionTok{str\_count}\NormalTok{(DNA, }\StringTok{"C"}\NormalTok{))}\SpecialCharTok{/}\FunctionTok{nchar}\NormalTok{(DNA)}\SpecialCharTok{*}\DecValTok{100}
+\NormalTok{  GC }\OtherTok{\textless{}{-}} \FunctionTok{round}\NormalTok{(GC,}\DecValTok{2}\NormalTok{)}
+  \FunctionTok{return}\NormalTok{(GC)}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#计算Tm值与自由能并合为一个向量输出}
+\NormalTok{get\_Tm\_G }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(seq,value\_table,}\AttributeTok{C\_Na=}\FloatTok{0.05}\NormalTok{,}\AttributeTok{C\_seq=}\FloatTok{2.5e{-}7}\NormalTok{,}\AttributeTok{tem=}\DecValTok{37}\NormalTok{,}\AttributeTok{A=}\SpecialCharTok{{-}}\FloatTok{0.0108}\NormalTok{,}\AttributeTok{R=}\FloatTok{0.001987}\NormalTok{) \{}
+\NormalTok{  get\_pairs }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(sequence) \{}
+\NormalTok{    pairs }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{(}\FunctionTok{nchar}\NormalTok{(sequence)}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{),}\ControlFlowTok{function}\NormalTok{(i)\{}
+      \FunctionTok{substr}\NormalTok{(sequence,i,i}\SpecialCharTok{+}\DecValTok{1}\NormalTok{)}
+\NormalTok{    \})}
+    \FunctionTok{return}\NormalTok{(pairs)}
+\NormalTok{  \}}
+  
+\NormalTok{  adjacent\_pairs }\OtherTok{\textless{}{-}} \FunctionTok{get\_pairs}\NormalTok{(seq)}
+  
+\NormalTok{  H\_values }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(value\_table}\SpecialCharTok{$}\NormalTok{H[}\FunctionTok{match}\NormalTok{(adjacent\_pairs,value\_table}\SpecialCharTok{$}\NormalTok{seq)])}
+\NormalTok{  S\_values }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(value\_table}\SpecialCharTok{$}\NormalTok{S[}\FunctionTok{match}\NormalTok{(adjacent\_pairs,value\_table}\SpecialCharTok{$}\NormalTok{seq)])}
+  
+\NormalTok{  H\_init }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(value\_table}\SpecialCharTok{$}\NormalTok{init\_H[}\FunctionTok{match}\NormalTok{(}\FunctionTok{c}\NormalTok{(adjacent\_pairs[}\DecValTok{1}\NormalTok{],adjacent\_pairs[}\FunctionTok{length}\NormalTok{(adjacent\_pairs)]),value\_table}\SpecialCharTok{$}\NormalTok{seq)])}
+\NormalTok{  S\_init }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(value\_table}\SpecialCharTok{$}\NormalTok{init\_S[}\FunctionTok{match}\NormalTok{(}\FunctionTok{c}\NormalTok{(adjacent\_pairs[}\DecValTok{1}\NormalTok{],adjacent\_pairs[}\FunctionTok{length}\NormalTok{(adjacent\_pairs)]),value\_table}\SpecialCharTok{$}\NormalTok{seq)])}
+  
+\NormalTok{  G }\OtherTok{\textless{}{-}}\NormalTok{ (H\_values}\SpecialCharTok{+}\NormalTok{H\_init) }\SpecialCharTok{{-}}\NormalTok{ (tem}\FloatTok{+273.15}\NormalTok{)}\SpecialCharTok{*}\NormalTok{(S\_values}\SpecialCharTok{+}\NormalTok{S\_init)}
+\NormalTok{  Tm }\OtherTok{\textless{}{-}}\NormalTok{ H\_values}\SpecialCharTok{/}\NormalTok{(S\_values}\SpecialCharTok{+}\NormalTok{A}\SpecialCharTok{+}\NormalTok{R}\SpecialCharTok{*}\FunctionTok{log}\NormalTok{(C\_seq}\SpecialCharTok{/}\DecValTok{4}\NormalTok{))}\SpecialCharTok{{-}}\FloatTok{273.15}\SpecialCharTok{+}\NormalTok{(}\FloatTok{11.4}\SpecialCharTok{*}\FunctionTok{log10}\NormalTok{(C\_Na))}
+  
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(Tm,G))}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#获取字符串中特定长度的子集并标注位置}
+\NormalTok{get\_all\_primers }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(minsize, maxsize, DNAsize, DNAseq) \{}
+
+\NormalTok{  get\_primer\_positions }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(minsize, maxsize, DNAsize) \{}
+    
+\NormalTok{    primer\_size\_range }\OtherTok{\textless{}{-}}\NormalTok{ minsize}\SpecialCharTok{:}\NormalTok{maxsize}
+    
+\NormalTok{    get\_position }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(DNAsize,primer\_size) \{}
+\NormalTok{    startpoint }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\NormalTok{(DNAsize }\SpecialCharTok{{-}}\NormalTok{ primer\_size }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}
+\NormalTok{    endpoint }\OtherTok{\textless{}{-}}\NormalTok{ primer\_size}\SpecialCharTok{:}\NormalTok{DNAsize}
+    
+\NormalTok{    temdata }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{start =}\NormalTok{ startpoint, }\AttributeTok{end =}\NormalTok{ endpoint)}
+    
+    \FunctionTok{return}\NormalTok{(temdata)}
+\NormalTok{    \}}
+    
+\NormalTok{    position\_list }\OtherTok{\textless{}{-}} \FunctionTok{mapply}\NormalTok{(get\_position, }
+                            \AttributeTok{DNAsize =}\NormalTok{ DNAsize, }
+                            \AttributeTok{primer\_size =}\NormalTok{ primer\_size\_range)}
+    
+\NormalTok{    position\_map }\OtherTok{\textless{}{-}} \FunctionTok{lapply}\NormalTok{(}\FunctionTok{data.frame}\NormalTok{(position\_list), as.list)}
+    
+\NormalTok{    primer\_all\_position }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(bind\_rows, position\_map)}
+\NormalTok{    primer\_all\_position}\SpecialCharTok{$}\NormalTok{accession }\OtherTok{\textless{}{-}} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(primer\_all\_position}\SpecialCharTok{$}\NormalTok{start)}
+    
+    \FunctionTok{return}\NormalTok{(primer\_all\_position)}
+\NormalTok{  \}}
+
+\NormalTok{  primer\_positions }\OtherTok{\textless{}{-}} \FunctionTok{get\_primer\_positions}\NormalTok{(}\AttributeTok{minsize =}\NormalTok{ minsize,}
+                                           \AttributeTok{maxsize =}\NormalTok{ maxsize,}
+                                           \AttributeTok{DNAsize =}\NormalTok{ DNAsize)}
+  
+\NormalTok{  primer\_positions}\SpecialCharTok{$}\NormalTok{seq }\OtherTok{\textless{}{-}} \FunctionTok{str\_sub}\NormalTok{(DNAseq, }\AttributeTok{start =}\NormalTok{ primer\_positions}\SpecialCharTok{$}\NormalTok{start, }\AttributeTok{end =}\NormalTok{ primer\_positions}\SpecialCharTok{$}\NormalTok{end)}
+
+  \FunctionTok{return}\NormalTok{(primer\_positions)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux52a0ux8f7dux6240ux9700ux8981ux7684ux5305}{%
+\subsection{加载所需要的包}\label{ux52a0ux8f7dux6240ux9700ux8981ux7684ux5305}}
+
+该流程需要使用以下常用处理字符串的包：\\
+1. \texttt{stringr}\\
+2. \texttt{dplyr}\\
+3. \texttt{tidyr}
+
+运行以下代码加载包
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#加载包}
+\FunctionTok{library}\NormalTok{(stringr)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(tidyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux5f00ux59cbux5206ux6790}{%
+\subsection{开始分析}\label{ux5f00ux59cbux5206ux6790}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#加载数据并初步处理}
+\FunctionTok{setwd}\NormalTok{(}\StringTok{"C:/Users/Hongxi/Documents/R\_project"}\NormalTok{)}
+
+\NormalTok{input\_path }\OtherTok{\textless{}{-}} \StringTok{"./sequences/18S\_rRNA\_N1.txt"}
+
+\NormalTok{NN\_values }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"./scripts/NN\_values.csv"}\NormalTok{)}
+\NormalTok{F\_DNA }\OtherTok{\textless{}{-}} \FunctionTok{paste}\NormalTok{(}\FunctionTok{readLines}\NormalTok{(input\_path), }\AttributeTok{collapse =} \StringTok{""}\NormalTok{)}
+\NormalTok{R\_DNA }\OtherTok{\textless{}{-}} \FunctionTok{reverseDNA}\NormalTok{(}\AttributeTok{DNA =}\NormalTok{ F\_DNA)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#目标序列基础分析}
+\NormalTok{target\_size }\OtherTok{\textless{}{-}} \FunctionTok{nchar}\NormalTok{(F\_DNA)}
+
+\NormalTok{target\_GC }\OtherTok{\textless{}{-}} \FunctionTok{GC\_contain}\NormalTok{(F\_DNA)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux5355ux6761ux5f15ux7269ux7684ux9884ux7b5bux9009}{%
+\subsection{单条引物的预筛选}\label{ux5355ux6761ux5f15ux7269ux7684ux9884ux7b5bux9009}}
+
+根据引物大小，使用本流程预先设定的函数\texttt{get\_all\_primers}选出所有长度范围内的子序列以减少运算量。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#输入引物大小限制}
+
+\NormalTok{primer\_size\_min }\OtherTok{\textless{}{-}} \DecValTok{18}
+\NormalTok{primer\_size\_max }\OtherTok{\textless{}{-}} \DecValTok{23}
+
+\CommentTok{\#获取潜在引物序列}
+\NormalTok{F\_primer\_all }\OtherTok{\textless{}{-}} \FunctionTok{get\_all\_primers}\NormalTok{(}\AttributeTok{minsize =}\NormalTok{ primer\_size\_min,}
+                                \AttributeTok{maxsize =}\NormalTok{ primer\_size\_max,}
+                                \AttributeTok{DNAsize =}\NormalTok{ target\_size,}
+                                \AttributeTok{DNAseq =}\NormalTok{ F\_DNA)}
+\NormalTok{R\_primer\_all }\OtherTok{\textless{}{-}} \FunctionTok{get\_all\_primers}\NormalTok{(}\AttributeTok{minsize =}\NormalTok{ primer\_size\_min,}
+                                \AttributeTok{maxsize =}\NormalTok{ primer\_size\_max,}
+                                \AttributeTok{DNAsize =}\NormalTok{ target\_size,}
+                                \AttributeTok{DNAseq =}\NormalTok{ R\_DNA)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux5355ux6761ux5f15ux7269ux7684ux7b5bux9009}{%
+\subsection{单条引物的筛选}\label{ux5355ux6761ux5f15ux7269ux7684ux7b5bux9009}}
+
+这里使用的限制条件有：\\
+1. 引物大小\\
+2. \st{CG含量}\\
+3. 引物Tm:\\
+引物的Tm值的计算方式为改良后的最邻近法，其中参考了单价阳离子浓度和模板浓度的参数
+4. 引物自身3端配对\\
+5. 引物与靶标的3端配对
+
+其中,引物自身配对的限制是为了尽量避免发卡结构和引物二聚体的产生，与靶标的3端限制是为了避免与靶标的非特异性扩增。但是这种方法无法准确排除发卡结构和引物二聚体，因此外部软件的介入可能是必要的。
+
+调整相关参数（GC含量、Tm范围、引物自身3端配对上限（含）、引物与靶标配对上限（含））后运行以下代码，可得两个分别包含正反向可用单条引物的数据框
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#单引物筛选}
+\DocumentationTok{\#\#计算CG含量(此处应该可以优化)}
+\NormalTok{F\_primer\_all}\SpecialCharTok{$}\NormalTok{GC }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(F\_primer\_all}\SpecialCharTok{$}\NormalTok{seq), GC\_contain)}
+\NormalTok{R\_primer\_all}\SpecialCharTok{$}\NormalTok{GC }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(R\_primer\_all}\SpecialCharTok{$}\NormalTok{seq), GC\_contain)}
+
+\DocumentationTok{\#\#计算Tm和自由能}
+\NormalTok{F\_Tm\_G }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(F\_primer\_all}\SpecialCharTok{$}\NormalTok{seq),get\_Tm\_G,}\AttributeTok{value\_table =}\NormalTok{ NN\_values)}
+\NormalTok{R\_Tm\_G }\OtherTok{\textless{}{-}} \FunctionTok{sapply}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(R\_primer\_all}\SpecialCharTok{$}\NormalTok{seq),get\_Tm\_G,}\AttributeTok{value\_table =}\NormalTok{ NN\_values)}
+
+\NormalTok{F\_primer\_all}\SpecialCharTok{$}\NormalTok{Tm }\OtherTok{\textless{}{-}}\NormalTok{ F\_Tm\_G[}\DecValTok{1}\NormalTok{,]}
+\NormalTok{F\_primer\_all}\SpecialCharTok{$}\NormalTok{G }\OtherTok{\textless{}{-}}\NormalTok{ F\_Tm\_G[}\DecValTok{2}\NormalTok{,]}
+
+\NormalTok{R\_primer\_all}\SpecialCharTok{$}\NormalTok{Tm }\OtherTok{\textless{}{-}}\NormalTok{ R\_Tm\_G[}\DecValTok{1}\NormalTok{,]}
+\NormalTok{R\_primer\_all}\SpecialCharTok{$}\NormalTok{G }\OtherTok{\textless{}{-}}\NormalTok{ R\_Tm\_G[}\DecValTok{2}\NormalTok{,]}
+
+\FunctionTok{rm}\NormalTok{(F\_Tm\_G,R\_Tm\_G)}
+
+\DocumentationTok{\#\#设定Tm阈值 (后期tm阈值应与GC含量协同)}
+\NormalTok{Tm\_min }\OtherTok{\textless{}{-}} \DecValTok{58}
+\NormalTok{Tm\_max }\OtherTok{\textless{}{-}} \DecValTok{63}
+
+\DocumentationTok{\#\#根据Tm值筛选}
+\NormalTok{F\_primer }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(F\_primer\_all, }\AttributeTok{subset =}\NormalTok{ Tm }\SpecialCharTok{\textgreater{}=}\NormalTok{ Tm\_min }\SpecialCharTok{\&}\NormalTok{ Tm }\SpecialCharTok{\textless{}=}\NormalTok{ Tm\_max)}
+\NormalTok{R\_primer }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(R\_primer\_all, }\AttributeTok{subset =}\NormalTok{ Tm }\SpecialCharTok{\textgreater{}=}\NormalTok{ Tm\_min }\SpecialCharTok{\&}\NormalTok{ Tm }\SpecialCharTok{\textless{}=}\NormalTok{ Tm\_max)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#输入引物3端配对数上限}
+\NormalTok{self\_match\_max }\OtherTok{\textless{}{-}} \DecValTok{5}
+\DocumentationTok{\#\#引物3端自身配对筛选}
+\NormalTok{F\_primer}\SpecialCharTok{$}\NormalTok{reversed\_tail }\OtherTok{\textless{}{-}} \FunctionTok{str\_sub}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(F\_primer}\SpecialCharTok{$}\NormalTok{seq),reverseDNA), }\AttributeTok{end =}\NormalTok{ self\_match\_max)}
+\NormalTok{F\_primer}\SpecialCharTok{$}\NormalTok{self\_tail\_match }\OtherTok{\textless{}{-}} \FunctionTok{str\_count}\NormalTok{(F\_primer}\SpecialCharTok{$}\NormalTok{seq,F\_primer}\SpecialCharTok{$}\NormalTok{reversed\_tail)}
+
+
+\NormalTok{R\_primer}\SpecialCharTok{$}\NormalTok{reversed\_tail }\OtherTok{\textless{}{-}} \FunctionTok{str\_sub}\NormalTok{(}\FunctionTok{sapply}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(R\_primer}\SpecialCharTok{$}\NormalTok{seq),reverseDNA), }\AttributeTok{end =}\NormalTok{ self\_match\_max)}
+\NormalTok{R\_primer}\SpecialCharTok{$}\NormalTok{self\_tail\_match }\OtherTok{\textless{}{-}} \FunctionTok{str\_count}\NormalTok{(R\_primer}\SpecialCharTok{$}\NormalTok{seq,R\_primer}\SpecialCharTok{$}\NormalTok{reversed\_tail)}
+
+\NormalTok{F\_primer }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(F\_primer,}
+                   \AttributeTok{subset =}\NormalTok{ self\_tail\_match }\SpecialCharTok{==} \DecValTok{0}\NormalTok{,}
+                   \AttributeTok{select =} \FunctionTok{c}\NormalTok{(}\StringTok{"accession"}\NormalTok{,}\StringTok{"seq"}\NormalTok{,}\StringTok{"start"}\NormalTok{,}\StringTok{"end"}\NormalTok{,}\StringTok{"GC"}\NormalTok{,}\StringTok{"Tm"}\NormalTok{))}
+\NormalTok{R\_primer }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(R\_primer,}
+                   \AttributeTok{subset =}\NormalTok{ self\_tail\_match }\SpecialCharTok{==} \DecValTok{0}\NormalTok{,}
+                   \AttributeTok{select =} \FunctionTok{c}\NormalTok{(}\StringTok{"accession"}\NormalTok{,}\StringTok{"seq"}\NormalTok{,}\StringTok{"start"}\NormalTok{,}\StringTok{"end"}\NormalTok{,}\StringTok{"GC"}\NormalTok{,}\StringTok{"Tm"}\NormalTok{))}
+
+
+\DocumentationTok{\#\#输入引物3端与靶标配对数上限}
+\NormalTok{target\_match\_max }\OtherTok{\textless{}{-}}\DecValTok{7}
+\DocumentationTok{\#\#引物3端与靶标筛选}
+\NormalTok{F\_primer}\SpecialCharTok{$}\NormalTok{tail }\OtherTok{\textless{}{-}} \FunctionTok{str\_sub}\NormalTok{(F\_primer}\SpecialCharTok{$}\NormalTok{seq, }\SpecialCharTok{{-}}\NormalTok{ target\_match\_max)}
+\NormalTok{F\_primer}\SpecialCharTok{$}\NormalTok{tail\_match }\OtherTok{\textless{}{-}} \FunctionTok{mapply}\NormalTok{(align\_all, }\FunctionTok{as.list}\NormalTok{(F\_primer}\SpecialCharTok{$}\NormalTok{tail), }\FunctionTok{as.list}\NormalTok{(F\_primer}\SpecialCharTok{$}\NormalTok{seq))}
+
+\NormalTok{R\_primer}\SpecialCharTok{$}\NormalTok{tail }\OtherTok{\textless{}{-}} \FunctionTok{str\_sub}\NormalTok{(R\_primer}\SpecialCharTok{$}\NormalTok{seq, }\SpecialCharTok{{-}}\NormalTok{ target\_match\_max)}
+\NormalTok{R\_primer}\SpecialCharTok{$}\NormalTok{tail\_match }\OtherTok{\textless{}{-}} \FunctionTok{mapply}\NormalTok{(align\_all, }\FunctionTok{as.list}\NormalTok{(R\_primer}\SpecialCharTok{$}\NormalTok{tail), }\FunctionTok{as.list}\NormalTok{(R\_primer}\SpecialCharTok{$}\NormalTok{seq))}
+
+\NormalTok{F\_primer }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(F\_primer,}
+                   \AttributeTok{subset =}\NormalTok{ tail\_match }\SpecialCharTok{==} \DecValTok{1}\NormalTok{,}
+                   \AttributeTok{select =} \FunctionTok{c}\NormalTok{(}\StringTok{"accession"}\NormalTok{,}\StringTok{"seq"}\NormalTok{,}\StringTok{"start"}\NormalTok{,}\StringTok{"end"}\NormalTok{,}\StringTok{"GC"}\NormalTok{,}\StringTok{"Tm"}\NormalTok{))}
+\FunctionTok{colnames}\NormalTok{(F\_primer) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"F\_accession"}\NormalTok{, }\StringTok{"F\_seq"}\NormalTok{, }\StringTok{"F\_start"}\NormalTok{, }\StringTok{"F\_end"}\NormalTok{,}\StringTok{"F\_GC"}\NormalTok{,}\StringTok{"F\_Tm"}\NormalTok{)}
+
+\NormalTok{R\_primer }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(R\_primer,}
+                   \AttributeTok{subset =}\NormalTok{ tail\_match }\SpecialCharTok{==} \DecValTok{1}\NormalTok{,}
+                   \AttributeTok{select =} \FunctionTok{c}\NormalTok{(}\StringTok{"accession"}\NormalTok{,}\StringTok{"seq"}\NormalTok{,}\StringTok{"start"}\NormalTok{,}\StringTok{"end"}\NormalTok{,}\StringTok{"GC"}\NormalTok{,}\StringTok{"Tm"}\NormalTok{))}
+\FunctionTok{colnames}\NormalTok{(R\_primer) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"R\_accession"}\NormalTok{, }\StringTok{"R\_seq"}\NormalTok{, }\StringTok{"R\_start"}\NormalTok{, }\StringTok{"R\_end"}\NormalTok{,}\StringTok{"R\_GC"}\NormalTok{,}\StringTok{"R\_Tm"}\NormalTok{)}
+
+\CommentTok{\#查看前20行引物所在的数据框}
+\FunctionTok{print}\NormalTok{(F\_primer[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{,])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 20 x 6
+##    F_accession F_seq              F_start F_end  F_GC  F_Tm
+##          <int> <chr>                <int> <int> <dbl> <dbl>
+##  1         173 ACATGCCGACGGGCGCTG     173   190  72.2  58.6
+##  2         174 CATGCCGACGGGCGCTGA     174   191  72.2  58.3
+##  3         175 ATGCCGACGGGCGCTGAC     175   192  72.2  58.4
+##  4         176 TGCCGACGGGCGCTGACC     176   193  77.8  60.6
+##  5         177 GCCGACGGGCGCTGACCC     177   194  83.3  61.7
+##  6         178 CCGACGGGCGCTGACCCC     178   195  83.3  61.2
+##  7         179 CGACGGGCGCTGACCCCC     179   196  83.3  61.2
+##  8         180 GACGGGCGCTGACCCCCT     180   197  77.8  59.7
+##  9         181 ACGGGCGCTGACCCCCTT     181   198  72.2  58.9
+## 10         182 CGGGCGCTGACCCCCTTC     182   199  77.8  58.6
+## 11         183 GGGCGCTGACCCCCTTCG     183   200  77.8  58.6
+## 12         184 GGCGCTGACCCCCTTCGC     184   201  77.8  59.2
+## 13         185 GCGCTGACCCCCTTCGCG     185   202  77.8  59.4
+## 14         186 CGCTGACCCCCTTCGCGG     186   203  77.8  58.8
+## 15         187 GCTGACCCCCTTCGCGGG     187   204  77.8  58.6
+## 16         188 CTGACCCCCTTCGCGGGG     188   205  77.8  58.1
+## 17         192 CCCCCTTCGCGGGGGGGA     192   209  83.3  61.8
+## 18         193 CCCCTTCGCGGGGGGGAT     193   210  77.8  59.4
+## 19         194 CCCTTCGCGGGGGGGATG     194   211  77.8  58.2
+## 20         195 CCTTCGCGGGGGGGATGC     195   212  77.8  58.8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(R\_primer[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{20}\NormalTok{,])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 20 x 6
+##    R_accession R_seq              R_start R_end  R_GC  R_Tm
+##          <int> <chr>                <int> <int> <dbl> <dbl>
+##  1          81 CTCAGCGCTCCGCCAGGG      81    98  77.8  58.6
+##  2          82 TCAGCGCTCCGCCAGGGC      82    99  77.8  60.5
+##  3          83 CAGCGCTCCGCCAGGGCC      83   100  83.3  61.9
+##  4          86 CGCTCCGCCAGGGCCGTG      86   103  83.3  61.7
+##  5          87 GCTCCGCCAGGGCCGTGG      87   104  83.3  61.6
+##  6          88 CTCCGCCAGGGCCGTGGG      88   105  83.3  61.1
+##  7          93 CCAGGGCCGTGGGCCGAC      93   110  83.3  61.3
+##  8          94 CAGGGCCGTGGGCCGACC      94   111  83.3  61.3
+##  9          95 AGGGCCGTGGGCCGACCC      95   112  83.3  62.5
+## 10         108 GACCCCGGCGGGGCCGAT     108   125  83.3  62.5
+## 11         109 ACCCCGGCGGGGCCGATC     109   126  83.3  62.5
+## 12         112 CCGGCGGGGCCGATCCGA     112   129  83.3  62.3
+## 13         113 CGGCGGGGCCGATCCGAG     113   130  83.3  60.9
+## 14         114 GGCGGGGCCGATCCGAGG     114   131  83.3  60.8
+## 15         115 GCGGGGCCGATCCGAGGG     115   132  83.3  60.8
+## 16         116 CGGGGCCGATCCGAGGGC     116   133  83.3  60.8
+## 17         117 GGGGCCGATCCGAGGGCC     117   134  83.3  60.7
+## 18         118 GGGCCGATCCGAGGGCCT     118   135  77.8  59.3
+## 19         286 CGGGTTACCCGCGCCTGC     286   303  77.8  59.4
+## 20         287 GGGTTACCCGCGCCTGCC     287   304  77.8  59.3
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{ux989dux5916ux9650ux5236ux6761ux4ef6}{%
+\subsection{额外限制条件}\label{ux989dux5916ux9650ux5236ux6761ux4ef6}}
+
+\textasciitilde\textasciitilde 大部分资料显示，引物末端避免使用A或T可以有效避免扩增失败的情况，在此可以使用以下代码选择只以GC结尾的引物。
+
+此外，有资料表明引物3端避开密码子的第三位也能提升扩增效率。值得注意的是，也有相关论点认为过多的GC在3端聚集可能会导致非特异性扩增。后续在单个引物的筛选阶段加入该限制可能也是有必要的。
+
+该代码块默认不运行，需要时可选择单独运行。
+\textasciitilde\textasciitilde{}
+
+启用GC筛选（可选,默认关闭）
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\hypertarget{ux5f15ux7269ux5bf9ux7684ux7b5bux9009}{%
+\subsection{引物对的筛选}\label{ux5f15ux7269ux5bf9ux7684ux7b5bux9009}}
+
+与单个引物筛选类似，此处使用的筛选条件有：\\
+1. 扩增子长度\\
+2. 引物对的Tm差异\\
+3. 引物间的3端连续配对个数\\
+4. 引物间任一连续碱基配对个数
+
+在大部分资料中，限制引物间的配对主要是由认为选择的标准，如5bp或7bp。其本质在于考虑引物序列的互补链的相似性，可能后期可以将BLAST比对使用到其中，或者设计一个打分规则判断引物对的可用性。可能需要检测引物对的外部软件如IDT以获得高质量的结果。
+
+调整扩增子长度、引物Tm差值、引物间3端配对上限（含）、引物间任意互补上限（含）后运行以下代码，符合条件的引物对（包括其序列、5-3端位置、GC含量、Tm值）将被放于数据框中并输出。
+
+该步骤运算量较大，通常需要20s，但根据靶标序列的变大和限制条件的放松，运算时间可能会达数分钟。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#引物对筛选}
+\DocumentationTok{\#\#输入引物对限制条件}
+\NormalTok{pcr\_max }\OtherTok{\textless{}{-}} \DecValTok{100}
+\NormalTok{pcr\_min }\OtherTok{\textless{}{-}} \DecValTok{50}
+
+\NormalTok{deltar\_Tm }\OtherTok{\textless{}{-}} \DecValTok{2}
+
+\DocumentationTok{\#\#获取潜在引物对表,并根据限制筛选}
+
+\NormalTok{get\_all\_primer\_sets }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(F\_primer,R\_primer,target\_size,pcr\_min,pcr\_max,deltar\_Tm,end\_match, total\_match)\{}
+  
+\NormalTok{  F\_primer\_list }\OtherTok{\textless{}{-}} \FunctionTok{split}\NormalTok{(F\_primer,F\_primer}\SpecialCharTok{$}\NormalTok{F\_accession)}
+
+\NormalTok{  get\_primer\_sets }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(f\_primer\_data,r\_primer\_data, target\_size, pcr\_min, pcr\_max, deltar\_Tm) \{}
+      
+\NormalTok{      primer\_sets }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(f\_primer\_data,r\_primer\_data, }\AttributeTok{all =}\NormalTok{ T)}
+      
+\NormalTok{      primer\_sets}\SpecialCharTok{$}\NormalTok{pcr\_length }\OtherTok{\textless{}{-}}\NormalTok{ target\_size}\SpecialCharTok{{-}}\NormalTok{(primer\_sets}\SpecialCharTok{$}\NormalTok{R\_start}\SpecialCharTok{+}\NormalTok{primer\_sets}\SpecialCharTok{$}\NormalTok{F\_start)}
+\NormalTok{      primer\_sets}\SpecialCharTok{$}\NormalTok{pcr\_distance }\OtherTok{\textless{}{-}}\NormalTok{ target\_size }\SpecialCharTok{{-}}\NormalTok{(primer\_sets}\SpecialCharTok{$}\NormalTok{R\_end }\SpecialCharTok{+}\NormalTok{ primer\_sets}\SpecialCharTok{$}\NormalTok{F\_end)}
+\NormalTok{      primer\_sets}\SpecialCharTok{$}\NormalTok{D\_Tm }\OtherTok{\textless{}{-}}\NormalTok{ primer\_sets}\SpecialCharTok{$}\NormalTok{R\_Tm }\SpecialCharTok{{-}}\NormalTok{ primer\_sets}\SpecialCharTok{$}\NormalTok{F\_Tm}
+      
+\NormalTok{      primer\_sets }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(primer\_sets, }
+                              \AttributeTok{subset =}\NormalTok{ pcr\_length }\SpecialCharTok{\textgreater{}=}\NormalTok{ pcr\_min}
+                            \SpecialCharTok{\&}\NormalTok{ pcr\_length }\SpecialCharTok{\textless{}=}\NormalTok{ pcr\_max }
+                            \SpecialCharTok{\&}\NormalTok{ pcr\_distance }\SpecialCharTok{\textgreater{}=} \DecValTok{0} 
+                            \SpecialCharTok{\&}\NormalTok{ D\_Tm }\SpecialCharTok{\textless{}=}\NormalTok{ deltar\_Tm }
+                            \SpecialCharTok{\&}\NormalTok{ D\_Tm }\SpecialCharTok{\textgreater{}=} \SpecialCharTok{{-}}\NormalTok{deltar\_Tm,}
+                              \AttributeTok{select =} \FunctionTok{c}\NormalTok{(}\StringTok{"R\_seq"}\NormalTok{, }\StringTok{"R\_start"}\NormalTok{, }\StringTok{"R\_end"}\NormalTok{,}\StringTok{"R\_GC"}\NormalTok{,}\StringTok{"R\_Tm"}\NormalTok{, }\StringTok{"F\_seq"}\NormalTok{, }\StringTok{"F\_start"}\NormalTok{, }\StringTok{"F\_end"}\NormalTok{,}\StringTok{"F\_GC"}\NormalTok{,}\StringTok{"F\_Tm"}\NormalTok{,}\StringTok{"pcr\_length"}\NormalTok{))}
+      
+      \FunctionTok{return}\NormalTok{(primer\_sets)}
+\NormalTok{  \}}
+  
+\NormalTok{  primer\_sets\_list }\OtherTok{\textless{}{-}}\FunctionTok{lapply}\NormalTok{(F\_primer\_list,get\_primer\_sets,}
+                            \AttributeTok{f\_primer\_data =}\NormalTok{ R\_primer,}
+                            \AttributeTok{target\_size =}\NormalTok{ target\_size,}
+                            \AttributeTok{pcr\_min=}\NormalTok{pcr\_min,}
+                            \AttributeTok{pcr\_max=}\NormalTok{pcr\_max,}
+                            \AttributeTok{deltar\_Tm =}\NormalTok{ deltar\_Tm)}
+  
+\NormalTok{  primer\_sets }\OtherTok{\textless{}{-}} \FunctionTok{do.call}\NormalTok{(rbind,primer\_sets\_list)}
+  
+  \FunctionTok{return}\NormalTok{(primer\_sets)}
+\NormalTok{\}}
+
+\NormalTok{primer\_sets\_all }\OtherTok{\textless{}{-}} \FunctionTok{get\_all\_primer\_sets}\NormalTok{(}\AttributeTok{F\_primer=}\NormalTok{F\_primer,}\AttributeTok{R\_primer=}\NormalTok{R\_primer,}\AttributeTok{target\_size=}\NormalTok{target\_size,}\AttributeTok{pcr\_min=}\NormalTok{pcr\_min,}\AttributeTok{pcr\_max=}\NormalTok{pcr\_max,}\AttributeTok{deltar\_Tm =}\NormalTok{ deltar\_Tm)}
+
+\DocumentationTok{\#\#根据引物间3端互补性筛选(可使用正则表达式优化)}
+\NormalTok{end\_match\_length }\OtherTok{\textless{}{-}} \DecValTok{5}
+
+\NormalTok{primer\_sets\_all}\SpecialCharTok{$}\NormalTok{R\_tail }\OtherTok{\textless{}{-}} \FunctionTok{str\_sub}\NormalTok{(primer\_sets\_all}\SpecialCharTok{$}\NormalTok{R\_seq, }\SpecialCharTok{{-}}\NormalTok{end\_match\_length)}
+\NormalTok{primer\_sets\_all}\SpecialCharTok{$}\NormalTok{F\_tail }\OtherTok{\textless{}{-}} \FunctionTok{str\_sub}\NormalTok{(primer\_sets\_all}\SpecialCharTok{$}\NormalTok{F\_seq, }\SpecialCharTok{{-}}\NormalTok{end\_match\_length)}
+
+\NormalTok{primer\_sets\_all}\SpecialCharTok{$}\NormalTok{total\_tail\_match }\OtherTok{\textless{}{-}} \FunctionTok{mapply}\NormalTok{(align\_all, }\FunctionTok{as.list}\NormalTok{(primer\_sets\_all}\SpecialCharTok{$}\NormalTok{F\_tail), }\FunctionTok{as.list}\NormalTok{(primer\_sets\_all}\SpecialCharTok{$}\NormalTok{R\_seq))}\SpecialCharTok{+}\FunctionTok{mapply}\NormalTok{(align\_all, }\FunctionTok{as.list}\NormalTok{(primer\_sets\_all}\SpecialCharTok{$}\NormalTok{R\_tail), }\FunctionTok{as.list}\NormalTok{(primer\_sets\_all}\SpecialCharTok{$}\NormalTok{F\_seq))}
+
+\NormalTok{primer\_sets\_all }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(primer\_sets\_all,}
+                          \AttributeTok{subset =}\NormalTok{ total\_tail\_match }\SpecialCharTok{==} \DecValTok{0}\NormalTok{,}
+                          \AttributeTok{select =} \FunctionTok{c}\NormalTok{(}\StringTok{"R\_seq"}\NormalTok{, }\StringTok{"R\_start"}\NormalTok{, }\StringTok{"R\_end"}\NormalTok{,}\StringTok{"R\_GC"}\NormalTok{,}\StringTok{"R\_Tm"}\NormalTok{, }\StringTok{"F\_seq"}\NormalTok{, }\StringTok{"F\_start"}\NormalTok{, }\StringTok{"F\_end"}\NormalTok{,}\StringTok{"F\_GC"}\NormalTok{,}\StringTok{"F\_Tm"}\NormalTok{,}\StringTok{"pcr\_length"}\NormalTok{))}
+
+\DocumentationTok{\#\#根据引物间任意互补性筛选}
+\NormalTok{total\_match\_length }\OtherTok{\textless{}{-}} \DecValTok{7}
+
+\NormalTok{align\_between\_primers }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(q1,q2,length)\{}
+  
+\NormalTok{  select\_pattern }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{".\{"}\NormalTok{,length,}\StringTok{"\}"}\NormalTok{)}
+  
+\NormalTok{  any\_match\_q1 }\OtherTok{\textless{}{-}} \FunctionTok{any}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(q1,}\FunctionTok{str\_extract\_all}\NormalTok{(q2, }\AttributeTok{pattern =}\NormalTok{ select\_pattern)[[}\DecValTok{1}\NormalTok{]]))}
+\NormalTok{  any\_match\_q2 }\OtherTok{\textless{}{-}} \FunctionTok{any}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(q2,}\FunctionTok{str\_extract\_all}\NormalTok{(q1, }\AttributeTok{pattern =}\NormalTok{ select\_pattern)[[}\DecValTok{1}\NormalTok{]]))}
+  \FunctionTok{return}\NormalTok{(any\_match\_q1 }\SpecialCharTok{==}\NormalTok{ T }\SpecialCharTok{|}\NormalTok{ any\_match\_q2}\SpecialCharTok{==}\NormalTok{ T)}
+\NormalTok{\}}
+
+\NormalTok{primer\_sets\_all}\SpecialCharTok{$}\NormalTok{any\_pair\_match }\OtherTok{\textless{}{-}} \FunctionTok{mapply}\NormalTok{(align\_between\_primers,}\FunctionTok{as.list}\NormalTok{(primer\_sets\_all}\SpecialCharTok{$}\NormalTok{R\_seq),}\FunctionTok{as.list}\NormalTok{(primer\_sets\_all}\SpecialCharTok{$}\NormalTok{F\_seq),}\AttributeTok{length =}\NormalTok{ total\_match\_length)}
+
+\NormalTok{primer\_sets }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(primer\_sets\_all, }
+                      \AttributeTok{subset =}\NormalTok{ any\_pair\_match }\SpecialCharTok{==}\NormalTok{ F,}
+                      \AttributeTok{select =} \FunctionTok{c}\NormalTok{(}\StringTok{"R\_seq"}\NormalTok{, }\StringTok{"R\_start"}\NormalTok{, }\StringTok{"R\_end"}\NormalTok{,}\StringTok{"R\_GC"}\NormalTok{,}\StringTok{"R\_Tm"}\NormalTok{, }\StringTok{"F\_seq"}\NormalTok{, }\StringTok{"F\_start"}\NormalTok{, }\StringTok{"F\_end"}\NormalTok{,}\StringTok{"F\_GC"}\NormalTok{,}\StringTok{"F\_Tm"}\NormalTok{,}\StringTok{"pcr\_length"}\NormalTok{))}
+
+\FunctionTok{print}\NormalTok{(primer\_sets[}\FunctionTok{sample}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(primer\_sets), }\DecValTok{15}\NormalTok{), ])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                             R_seq R_start R_end  R_GC     R_Tm
+## 7077.1356 TCCCCGATCCCCATCACGAATGG     256   278 60.87 59.67085
+## 7523.195       CCCCGCGAAGGGGGTCAG    1665  1682 77.78 58.05688
+## 9645.1621 CCGTTTCTCAGGCTCCCTCTCCG    1418  1440 65.22 60.22473
+## 7774.1632 TCCCTCTCCGGAATCGAACCCTG    1431  1453 60.87 58.99876
+## 3366.978   CCTGCCGGCGTAGGGTAGGCAC     299   320 72.73 62.92954
+## 7071.433     CAACGGGTTACCCGCGCCTG     283   302 70.00 59.61596
+## 7009.33        GCGTGCAGCCCCGGACAT     345   362 72.22 58.48298
+## 6018.1583 TCGTCACTACCTCCCCGGGTCGG    1351  1373 69.57 62.63975
+## 9548.1677 ACGTTCGAATGGGTCGTCGCCGC    1518  1540 65.22 62.99957
+## 8531.756    CTCCTGGTGGTGCCCTTCCGT     646   666 66.67 59.76418
+## 8934.1359 ATGGGGTTCAACGGGTTACCCGC     275   297 60.87 60.73604
+## 4914.260      CCGGGCCGGGTGAGGTTTC     595   613 73.68 58.81625
+## 10448.729   CAATCCTGTCCGTGTCCGGGC     580   600 66.67 59.05208
+## 10753.438    CCTGCCGGCGTAGGGTAGGC     299   318 75.00 60.61440
+## 3359.976   GTTCAACGGGTTACCCGCGCCT     280   301 63.64 60.91356
+##                             F_seq F_start F_end  F_GC     F_Tm pcr_length
+## 7077.1356   GCGCGCTACACTGACTGGCTC    1524  1544 66.67 59.35938         89
+## 7523.195   TGGTCGCTCGCTCCTCTCCTAC     121   142 63.64 58.67256         83
+## 9645.1621 GTGACCACGGGTGACGGGGAATC     395   417 65.22 60.93862         56
+## 7774.1632  TGGTAGTCGCCGTGCCTACCAT     372   393 59.09 58.67256         66
+## 3366.978      GGGGCTGCACGCGCGCTAC    1514  1532 78.95 62.46078         56
+## 7071.433    CTGCACGCGCGCTACACTGAC    1518  1538 66.67 59.95653         68
+## 7009.33     GTGGCGTTCAGCCACCCGAGA    1456  1476 66.67 60.33111         68
+## 6018.1583   AGGAAGGCAGCAGGCGCGCAA     465   485 66.67 62.82820         53
+## 9548.1677 GATAACCTCGGGCCGATCGCACG     298   320 65.22 61.10372         53
+## 8531.756   GGGCAGCTTCCGGGAAACCAAA    1129  1150 59.09 59.19053         94
+## 8934.1359  CACTGACTGGCTCAGCGTGTGC    1532  1553 63.64 59.71981         62
+## 4914.260     GGCACCACCAGGAGTGGAGC    1211  1230 70.00 58.71482         63
+## 10448.729 GAATTGACGGAAGGGCACCACCA    1198  1220 56.52 58.77405         91
+## 10753.438 CTTAGATGTCCGGGGCTGCACGC    1503  1525 65.22 61.44611         67
+## 3359.976      GATGTCCGGGGCTGCACGC    1507  1525 73.68 59.61379         82
+\end{verbatim}
+
+以上表格随机显示了结果中的15对可用引物。
+
+\hypertarget{ux90e8ux5206ux7ed3ux679cux7684ux53efux89c6ux5316}{%
+\subsection{部分结果的可视化}\label{ux90e8ux5206ux7ed3ux679cux7684ux53efux89c6ux5316}}
+
+利用筛选过程的中间参数，可以得出在目标DNA上相应位置引物的GC含量与可用引物在靶标上的覆盖范围
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\NormalTok{CG\_overview }\OtherTok{\textless{}{-}} 
+  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ F\_primer\_all, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{start, }\AttributeTok{y=}\NormalTok{GC))}\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{pch=}\DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"所选引物长度的GC含量与所在位置"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"位置"}\NormalTok{, }\AttributeTok{y =} \StringTok{"GC百分比"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{yintercept =}\NormalTok{ target\_GC), }\AttributeTok{colour =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{annotate}\NormalTok{(}\StringTok{\textquotesingle{}text\textquotesingle{}}\NormalTok{, }\AttributeTok{x =} \DecValTok{100}\NormalTok{, }\AttributeTok{y =}\NormalTok{ target\_GC}\DecValTok{{-}5}\NormalTok{, }\AttributeTok{label =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"GC="}\NormalTok{,target\_GC,}\StringTok{"\%"}\NormalTok{), }\AttributeTok{colour =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{panel.grid =} \FunctionTok{element\_blank}\NormalTok{())}
+
+\NormalTok{primer\_sets\_overview }\OtherTok{\textless{}{-}} 
+  \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ primer\_sets, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{R\_start, }\AttributeTok{y =}\DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_segment}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\DecValTok{0}\NormalTok{, }\AttributeTok{y=}\DecValTok{0}\NormalTok{, }\AttributeTok{xend =}\NormalTok{ target\_size, }\AttributeTok{yend =} \DecValTok{0}\NormalTok{))}\SpecialCharTok{+}
+  \FunctionTok{geom\_segment}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{target\_size}\SpecialCharTok{{-}}\NormalTok{R\_start, }\AttributeTok{y =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{xend =}\NormalTok{ target\_size}\SpecialCharTok{{-}}\NormalTok{R\_end, }\AttributeTok{yend =} \FloatTok{0.5}\NormalTok{),}\AttributeTok{data =}\NormalTok{ primer\_sets, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_segment}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{F\_start, }\AttributeTok{y =} \DecValTok{1}\NormalTok{, }\AttributeTok{xend =}\NormalTok{ F\_end, }\AttributeTok{yend =} \DecValTok{1}\NormalTok{),}\AttributeTok{data =}\NormalTok{ primer\_sets, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"正反向可用引物在靶标上的位置"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"基因位置"}\NormalTok{,}\AttributeTok{y =} \StringTok{""}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{coord\_fixed}\NormalTok{(}\AttributeTok{ratio =} \DecValTok{500}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.ticks =} \FunctionTok{element\_blank}\NormalTok{(),}\AttributeTok{axis.text.y =} \FunctionTok{element\_blank}\NormalTok{())}\SpecialCharTok{+}
+  \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{,}\AttributeTok{x=}\DecValTok{0}\NormalTok{, }\AttributeTok{y =} \DecValTok{1}\NormalTok{, }\AttributeTok{label =} \StringTok{"Forward"}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{annotate}\NormalTok{(}\StringTok{"text"}\NormalTok{,}\AttributeTok{x=}\DecValTok{0}\NormalTok{, }\AttributeTok{y =}\FloatTok{0.5}\NormalTok{,}\AttributeTok{label =} \StringTok{"Reverse"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{)}
+
+\NormalTok{CG\_overview}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{primer_setting_v.0.0.2_files/figure-latex/painting-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{primer\_sets\_overview}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{primer_setting_v.0.0.2_files/figure-latex/painting-2.pdf}
+
+\hypertarget{ux8f93ux51faux7ed3ux679cux5230ux7ed3ux679cux76eeux5f55}{%
+\subsection{输出结果到结果目录}\label{ux8f93ux51faux7ed3ux679cux5230ux7ed3ux679cux76eeux5f55}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{outpath }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"../results/"}\NormalTok{, }\FunctionTok{format}\NormalTok{(start\_time,}\StringTok{"\%y\%m\%d\_\%H\%M"}\NormalTok{))}
+
+\FunctionTok{dir.create}\NormalTok{(outpath)}
+
+\FunctionTok{write.csv}\NormalTok{(primer\_sets,}\AttributeTok{file =} \FunctionTok{paste0}\NormalTok{(outpath,}\StringTok{"/primer\_sets.csv"}\NormalTok{),}\AttributeTok{row.names =}\NormalTok{ F)}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux603bux7ed3}{%
+\subsection{总结}\label{ux603bux7ed3}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{end\_time }\OtherTok{\textless{}{-}} \FunctionTok{Sys.time}\NormalTok{()}
+
+\NormalTok{message }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{( }\StringTok{"本次运行耗费时间共"}\NormalTok{,}\FunctionTok{round}\NormalTok{(end\_time}\SpecialCharTok{{-}}\NormalTok{start\_time,}\DecValTok{3}\NormalTok{),}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{ 设置的引物长度于"}\NormalTok{,primer\_size\_min,}\StringTok{"与"}\NormalTok{,primer\_size\_max,}\StringTok{"之间;}\SpecialCharTok{\textbackslash{}n}\StringTok{ Tm值于"}\NormalTok{,Tm\_min,}\StringTok{"与"}\NormalTok{,Tm\_max,}\StringTok{"之间;}\SpecialCharTok{\textbackslash{}n}\StringTok{ 最终的扩增子长度在"}\NormalTok{,pcr\_min,}\StringTok{"到"}\NormalTok{,pcr\_max,}\StringTok{"。}\SpecialCharTok{\textbackslash{}n}\StringTok{ 共有"}\NormalTok{,}\FunctionTok{length}\NormalTok{(primer\_sets}\SpecialCharTok{$}\NormalTok{R\_seq),}\StringTok{"对引物被筛选出来"}\NormalTok{)}
+
+\FunctionTok{cat}\NormalTok{(message)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 本次运行耗费时间共37.202
+##  设置的引物长度于18与23之间;
+##  Tm值于58与63之间;
+##  最终的扩增子长度在50到100。
+##  共有43025对引物被筛选出来
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{write}\NormalTok{(message, }\AttributeTok{file =} \FunctionTok{paste0}\NormalTok{(outpath,}\StringTok{"/summary\_"}\NormalTok{,}\FunctionTok{basename}\NormalTok{(input\_path)))}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}
